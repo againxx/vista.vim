@@ -171,10 +171,10 @@ function! vista#finder#fzf#Highlight() abort
     let idx += 1
   endfor
 
-  execute 'syntax match FZFVistaTag    /\s*.*\(:\d\+\s\)\@=/' 'contains=FZFVistaIcon,'.join(icon_groups, ',')
-  execute 'syntax match FZFVistaNumber /^[^\[]*\(\s\s\[\)\@=/' 'contains=FZFVistaTag,FZFVistaIcon,'.join(icon_groups, ',')
-  syntax match FZFVistaScope  /^[^]│]*]/ contains=FZFVistaNumber,FZFVistaBracket
-  syntax match FZFVista /^[^│┌└]*/ contains=FZFVistaBracket,FZFVistaTag,FZFVistaNumber,FZFVistaScope
+  execute 'syntax match FZFVistaTag    /\s*.*\(:\d\+\s\)\@=/' 'contains=FZFVistaIcon,'.join(icon_groups, ',') 'contained'
+  syntax match FZFVistaNumber /[^\[]*\(\s\s\[\)\@=/ contains=FZFVistaTag contained
+  syntax match FZFVistaScope  /[^]│]*]\s\s/ contains=FZFVistaNumber,FZFVistaBracket contained
+  syntax match FZFVista /^│ [> ]\zs[^│┌└╰╭]*/ contains=FZFVistaScope
   syntax match FZFVistaBracket /\s\s\[\|\]\s\s/ contained
 
   hi default link FZFVistaBracket  SpecialKey
